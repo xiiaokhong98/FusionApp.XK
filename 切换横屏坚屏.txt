@@ -1,0 +1,12 @@
+按钮事件
+
+if SetHSP==nil then
+  --横屏
+  activity.setRequestedOrientation(0); 
+  SetHSP="H"
+else
+  --竖屏
+  activity.setRequestedOrientation(1); 
+  SetHSP=nil
+end
+弹出消息("切换成功")
