@@ -1,0 +1,35 @@
+点击事件
+
+view=toolbarParent
+color1 = 0xffFF8080;
+color2 = 0xff8080FF;
+color3 = 0xff80ffff;
+color4 = 0xff80ff80;
+color5 = 0xff60ff60;
+color6 = 0xff40ff40;
+color7 = 0xff20ff20;
+color8 = 0xff7070FF;
+color9 = 0xff6060FF;
+color10 = 0xff5050FF;
+color11 = 0xff4040FF;
+color12 = 0xff3030FF;
+color13 = 0xff2020FF;
+color14 = 0xff1010FF;
+color15 = 0xff70ffff;
+color16 = 0xff60ffff;
+color17 = 0xff50ffff;
+color18 = 0xff40ffff;
+color19 = 0xff30ffff;
+color20 = 0xff20ffff;
+color21 = 0xff10ffff;
+import "android.animation.ObjectAnimator"
+import "android.animation.ArgbEvaluator"
+import "android.animation.ValueAnimator"
+import "android.graphics.Color"
+colorAnim = ObjectAnimator.ofInt(view,"backgroundColor",{color1, color2, color3,color4,color5,color6,color7,color8,color9,color10,color11,color12,color13,color14,color15,color16,color17,color18,color19,color20,color21})
+colorAnim.setDuration(3000)
+colorAnim.setEvaluator(ArgbEvaluator())
+colorAnim.setRepeatCount(ValueAnimator.INFINITE)
+colorAnim.setRepeatMode(ValueAnimator.REVERSE)
+colorAnim.start()
+弹出消息("顶栏状态栏变色开启")
