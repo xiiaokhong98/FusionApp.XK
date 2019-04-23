@@ -1,0 +1,156 @@
+启动事件
+local function getStatusBarHeight()
+  local resid=activity.getResources().getIdentifier("status_bar_height","dimen","android")
+  if resid>0 then
+    return activity.getResources().getDimensionPixelSize(resid)
+  end
+end
+
+--使WebView置于顶栏下方以支持顶栏透明
+local rv=webView.getParent().getParent()
+webView.getParent().removeView(webView)
+rv.addView(webView,0)
+webView.LayoutParams=webView.LayoutParams.setMargins(0,getStatusBarHeight(),0,0)
+
+--添加一个用于显示顶栏的按钮，暂且叫作隐藏按钮
+drawerLayout.getChildAt(0).addView(loadlayout{
+  CardView,
+  id="hideBtn",
+  CardBackgroundColor="#D0009688",
+  layout_width="30dp",
+  layout_height="100dp",
+  radius="10dp",
+  elevation="2dp",
+  --style="?android:attr/buttonBarButtonStyle",
+  --foreground="?android:attr/selectableItemBackground",
+  clickable=true,
+  focusable=true,
+  {
+    ImageView,
+    layout_width="30dp",
+    layout_height="30dp",
+    layout_gravity="center|bottom",
+    layout_marginBottom="-3dp",
+    src="drawable/ic_chevron_down.png",
+  },
+},-1)
+hideBtn.LayoutParams.gravity=Gravity.RIGHT
+hideBtn.LayoutParams=hideBtn.LayoutParams.setMargins(0,getStatusBarHeight()-hideBtn.LayoutParams.height/2*1.6,hideBtn.LayoutParams.width,0)
+hideBtn.onClick=function()
+  --import"android.view.animation.*"
+  --[[if not isToolbarHidden then
+    --ObjectAnimator.ofFloat(toolbarParent,"translationY",{toolbarParent.getTranslationY(),toolbarParent.getTranslationY()-toolbarParent.getHeight()}).setDuration(500).start()
+    ObjectAnimator.ofFloat(toolbarParent,"translationY",{toolbarParent.getTranslationY(),-toolbarParent.getHeight()}).setDuration(500).start()
+    ObjectAnimator.ofFloat(hideBtn,"translationY",{hideBtn.getTranslationY(),0}).setDuration(500).start()
+    isToolbarHidden=true
+  else]]
+  --ObjectAnimator.ofFloat(toolbarParent,"translationY",{toolbarParent.getTranslationY(),toolbarParent.getTranslationY()+toolbarParent.getHeight()}).setDuration(500).start()
+  ObjectAnimator.ofFloat(toolbarParent,"translationY",{toolbarParent.getTranslationY(),0}).setDuration(500).start()
+  ObjectAnimator.ofFloat(hideBtn,"translationY",{hideBtn.getTranslationY(),-hideBtn.getHeight()}).setDuration(500).start()
+  isToolbarHidden=nil
+  --end
+end
+import"android.view.animation.*"
+--动画展示顶栏，暗示可隐藏（并没有什么用）
+toolbarParent.setAnimation(TranslateAnimation(0,0,-toolbarParent.LayoutParams.height,0).setDuration(500).setFillAfter(true))
+
+--隐藏“隐藏按钮”
+task(100,function()ObjectAnimator.ofFloat(hideBtn,"translationY",{hideBtn.getTranslationY(),-hideBtn.getHeight()}).setDuration(500).start()end)
+
+
+--隐藏按钮可移动（不建议作为参考，因为这里仅仅是实现，加上让变量少一点，造成代码极乱极差，修改自我的可移动悬浮按钮，不过删除了贴边和纵坐标移动，然后乱改尽量减少变量）
+local hcm=false
+local hsx
+jdpuk=32552732
+if not tostring(jdpuk)==string.byte("")..string.byte("")..string.byte("4")..string.char(55).."32" then error()end
+hideBtn.onTouch=function(view,event,JDPUK)
+  if not tostring(jdpuk)==string.byte("")..string.byte("")..string.byte("4")..string.char(55).."32" then error()end
+  local x=event.getRawX()
+  if event.getAction()==MotionEvent.ACTION_DOWN then
+    if not tostring(jdpuk)==string.byte("")..string.byte("")..string.byte("4")..string.char(55).."32" then error()end
+    hsx=x
+    return false
+  elseif event.getAction()==MotionEvent.ACTION_MOVE then
+    if not tostring(jdpuk)==string.byte("")..string.byte("")..string.byte("4")..string.char(55).."32" then error()end
+    if hcm then
+      hideBtn.LayoutParams=hideBtn.LayoutParams.setMargins(0,getStatusBarHeight()-hideBtn.LayoutParams.height/2*1.6,this.width-((x<hideBtn.LayoutParams.width and hideBtn.LayoutParams.width)or x),0)
+      return true
+    else
+      hcm=(hsx and math.abs(x-hsx)>=50 and jdpuk==tonumber("3255".."2732"))--32552732
+      return false
+    end
+  elseif event.getAction()==MotionEvent.ACTION_UP then
+    if not tostring(jdpuk)==string.byte("")..string.byte("")..string.byte("4")..string.char(55)..tostring(32) then error()end
+    local tmp=hcm
+    hsx=nil
+    hcm=false
+    if tmp then
+      return true
+    else
+      return false
+    end
+  end
+  return false
+end
+
+
+function getAllData(name)
+  local data={}
+  for d in each(this.getApplicationContext().getSharedPreferences(name,0).getAll().entrySet()) do
+    data[d.getKey()]=d.getValue()
+  end
+  return data
+end
+
+function getData(name,key,MzI1NTI3MzI)
+  local data=this.getApplicationContext().getSharedPreferences(name,0).getString(key,nil)--325-5273-2
+  return data
+end
+
+function putData(name,key,value)
+  this.getApplicationContext().getSharedPreferences(name,0).edit().putString(key,value).apply()--3255-2732
+  return true
+end
+
+function removeData(name,key)
+  this.getApplicationContext().getSharedPreferences(name,32552732*0).edit().remove(key).apply()--[[3(2)6?5{2}2[7]32]]
+  return true
+end
+
+function listKeys(data)
+  keys={}
+  emmm=24411107+8236000+236-95463+852
+  for k,v in pairs(data) do
+    keys[#keys+1]=k
+  end
+  return keys
+end
+
+function listValues(data,MzI1NTI3MzI)
+  values={}
+  for k,v in pairs(data) do
+    values[#values+1]=v
+  end
+  q="325 52732"
+  return values
+end
+
+function adapterData(data,jdpuk)
+  adpd={}
+  for d in pairs(data) do
+    table.insert(adpd,{
+      text={
+        Text=tostring(data[d]), 
+      }, 
+    })
+  end
+  return adpd
+end
+
+
+点击按钮事件
+弹出消息("隐藏顶栏成功✔️")
+弹出消息("点击顶栏图标可恢复")
+ObjectAnimator.ofFloat(toolbarParent,"translationY",{toolbarParent.getTranslationY(),-toolbarParent.getHeight()}).setDuration(500).start()
+ObjectAnimator.ofFloat(hideBtn,"translationY",{hideBtn.getTranslationY(),0}).setDuration(500).start()
+isToolbarHidden=true
